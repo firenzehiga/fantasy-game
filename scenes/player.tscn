@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://biwdmetvkfymp" path="res://assets/images/player/Player.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://d1heft7thepbk" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="AudioStream" uid="uid://ckel1o5fyloin" path="res://assets/audio/sword_swing.wav" id="3_qhqgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -300,7 +301,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4ni07")
 }],
-"loop": 0,
+"loop": 1,
 "name": &"idle_down",
 "speed": 5.0
 }, {
@@ -323,7 +324,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dt7fs")
 }],
-"loop": 0,
+"loop": 1,
 "name": &"idle_right",
 "speed": 5.0
 }, {
@@ -346,7 +347,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bj30b")
 }],
-"loop": 0,
+"loop": 1,
 "name": &"idle_up",
 "speed": 5.0
 }, {
@@ -420,10 +421,29 @@ animations = [{
 "speed": 7.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iil02"]
+size = Vector2(15, 15)
+
 [node name="Player" type="CharacterBody2D" unique_id=753896393]
 scale = Vector2(4, 4)
 script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=243250384]
 sprite_frames = SubResource("SpriteFrames_iil02")
-animation = &"attack_down"
+animation = &"attack_right"
+frame = 3
+frame_progress = 1.0
+
+[node name="SwingSword" type="AudioStreamPlayer2D" parent="." unique_id=2118108354]
+stream = ExtResource("3_qhqgy")
+pitch_scale = 3.0
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1042716920]
+position = Vector2(7.5, -0.5)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=226645690]
+shape = SubResource("RectangleShape2D_iil02")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

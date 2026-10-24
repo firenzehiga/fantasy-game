@@ -7,6 +7,7 @@ const SPEED = 300.0
 var last_direction: Vector2 = Vector2.RIGHT
 var is_attacking: bool = false         # Menandai apakah pemain sedang menyerang
 var hitbox_offset: Vector2             # Menyimpan offset posisi default hitbox
+var strength: int = 20                 # Kekuatan serangan / damage tebasan pedang pemain
 
 # Mengambil referensi node saat scene sudah siap
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -106,7 +107,7 @@ func update_hitbox_offset() -> void:
 	# Pola rotasi koordinat 4-arah
 	match last_direction:
 		Vector2.LEFT:
-			hitbox.position = Vector2(-x, y)
+			hitbox.position = Vector2(-x, y)	
 		Vector2.RIGHT:
 			hitbox.position = Vector2(x, y)
 		Vector2.UP:
@@ -118,4 +119,4 @@ func update_hitbox_offset() -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	# Deteksi jika sabetan mengenai musuh Slime
 	if is_attacking and body.name.begins_with("Slime"):
-		print(body.name)
+		body.take_damage(strength, position)

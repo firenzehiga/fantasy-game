@@ -1,22 +1,22 @@
 [gd_scene format=3 uid="uid://dccrhc55w6f65"]
 
-[ext_resource type="Texture2D" uid="uid://biwdmetvkfymp" path="res://assets/images/player/Player.png" id="1_3vyb7"]
+[ext_resource type="Texture2D" uid="uid://c301ydffn051w" path="res://assets/images/player/Player.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://d1heft7thepbk" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="AudioStream" uid="uid://ckel1o5fyloin" path="res://assets/audio/sword_swing.wav" id="3_qhqgy"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("1_3vyb7")
 region = Rect2(0, 192, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("1_3vyb7")
 region = Rect2(32, 192, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
 atlas = ExtResource("1_3vyb7")
 region = Rect2(64, 192, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ha2mi"]
 atlas = ExtResource("1_3vyb7")
 region = Rect2(96, 192, 32, 32)
 
@@ -216,9 +216,6 @@ region = Rect2(160, 160, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g2els")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_qhqgy")
 }, {
 "duration": 1.0,
@@ -226,6 +223,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qlg0r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ha2mi")
 }],
 "loop": 0,
 "name": &"attack_down",
@@ -421,6 +421,9 @@ animations = [{
 "speed": 7.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
+size = Vector2(10.75, 7.25)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iil02"]
 size = Vector2(15, 15)
 
@@ -430,9 +433,11 @@ script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=243250384]
 sprite_frames = SubResource("SpriteFrames_iil02")
-animation = &"attack_right"
-frame = 3
-frame_progress = 1.0
+animation = &"idle_right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1993216617]
+position = Vector2(-0.125, 3.625)
+shape = SubResource("RectangleShape2D_qhqgy")
 
 [node name="SwingSword" type="AudioStreamPlayer2D" parent="." unique_id=2118108354]
 stream = ExtResource("3_qhqgy")
@@ -440,6 +445,7 @@ pitch_scale = 3.0
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1042716920]
 position = Vector2(7.5, -0.5)
+collision_mask = 2
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=226645690]
